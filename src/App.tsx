@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Suspense } from "react";
+import Model from "./components/Model";
+import { Canvas } from "@react-three/fiber";
 
-function App() {
+function BackDrop() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <mesh receiveShadow position={[0, -0.3, 0]} rotation-x={-Math.PI / 2}>
+      <planeBufferGeometry attach="geometry" args={[10, 10]} />
+      <shadowMaterial attach="material" transparent opacity={0.4} />
+    </mesh>
   );
 }
+
+const App = () => {
+  return (
+    <div style={{ height: "500px", width: "500px", border: "solid red 1px" }}>
+      <Canvas
+        shadows
+        dpr={window.devicePixelRatio}
+        camera={{ position: [-1, 0.5, -1], zoom: 1 }}
+      >
+        {/*<OrbitControls />*/}
+        <directionalLight position={[0, 10, 0]} intensity={1} castShadow />
+        <directionalLight position={[5, 8, -10]} intensity={0.1} />
+        <directionalLight position={[-10, 0, 10]} intensity={0.1} />
+        <Suspense fallback={null}>
+          <Model />
+        </Suspense>
+        <BackDrop />
+      </Canvas>
+    </div>
+  );
+};
 
 export default App;
