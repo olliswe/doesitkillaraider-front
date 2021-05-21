@@ -19,11 +19,6 @@ const bleepsSettings = {
 const generalAnimator = { duration: { enter: 500, exit: 200 } };
 
 const ArwesLayout = ({ children }: { children: React.ReactNode }) => {
-  const [activate, setActivate] = useState(true);
-  useEffect(() => {
-    const timeout = setTimeout(() => setActivate(!activate), 2000);
-    return () => clearTimeout(timeout);
-  }, [activate]);
   return (
     <ArwesThemeProvider>
       <StylesBaseline styles={{ body: { fontFamily: ROOT_FONT_FAMILY } }} />
