@@ -15,8 +15,7 @@ type GLTFResult = GLTF & {
   materials: {};
 };
 
-const pi = Math.PI;
-const AMPLITUDE = 0.0005;
+const AMPLITUDE = 0.0007;
 const SPEED = 2;
 
 export default function Model(props: JSX.IntrinsicElements["group"]) {

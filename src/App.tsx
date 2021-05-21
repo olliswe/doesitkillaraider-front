@@ -1,34 +1,33 @@
-import { Suspense } from "react";
-import Model from "./components/Model";
-import { Canvas } from "@react-three/fiber";
+import ArwesLayout from "./components/ArwesLayout";
+import Scene from "./components/Scene";
+import styled from "styled-components";
+import { FrameUnderline, Text } from "@arwes/core";
+import Layout from "./components/Layout";
 
-function BackDrop() {
-  return (
-    <mesh receiveShadow position={[0, -0.3, 0]} rotation-x={-Math.PI / 2}>
-      <planeBufferGeometry attach="geometry" args={[10, 10]} />
-      <shadowMaterial attach="material" transparent opacity={0.4} />
-    </mesh>
-  );
-}
+const SceneWrapper = styled.div`
+  height: 500px;
+  width: 500px;
+  position: absolute;
+  top: 0;
+  right: 0;
+`;
+
+const Header = styled(Text)`
+  font-size: 2rem;
+`;
 
 const App = () => {
   return (
-    <div style={{ height: "500px", width: "500px", border: "solid red 1px" }}>
-      <Canvas
-        shadows
-        dpr={window.devicePixelRatio}
-        camera={{ position: [-1, 0.5, -1], zoom: 1 }}
-      >
-        {/*<OrbitControls />*/}
-        <directionalLight position={[0, 10, 0]} intensity={1} castShadow />
-        <directionalLight position={[5, 8, -10]} intensity={0.1} />
-        <directionalLight position={[-10, 0, 10]} intensity={0.1} />
-        <Suspense fallback={null}>
-          <Model />
-        </Suspense>
-        <BackDrop />
-      </Canvas>
-    </div>
+    <ArwesLayout>
+      <Layout>
+        <FrameUnderline>
+          <Header>+++ DOES IT KILL A RAIDER +++</Header>
+        </FrameUnderline>
+        <SceneWrapper>
+          <Scene />
+        </SceneWrapper>
+      </Layout>
+    </ArwesLayout>
   );
 };
 
