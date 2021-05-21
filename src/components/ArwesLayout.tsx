@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AnimatorGeneralProvider } from "@arwes/animation";
 import { BleepsProvider } from "@arwes/sounds";
 import { ArwesThemeProvider, StylesBaseline } from "@arwes/core";

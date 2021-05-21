@@ -3,6 +3,7 @@ import Scene from "./components/Scene";
 import styled from "styled-components";
 import { FrameUnderline, Text } from "@arwes/core";
 import Layout from "./components/Layout";
+import StatsForm from "./components/StatsForm";
 
 const SceneWrapper = styled.div`
   height: 500px;
@@ -10,6 +11,7 @@ const SceneWrapper = styled.div`
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 100;
 `;
 
 const Header = styled(Text)`
@@ -26,6 +28,7 @@ const App = () => {
         <SceneWrapper>
           <Scene />
         </SceneWrapper>
+        <StatsForm />
       </Layout>
     </ArwesLayout>
   );
