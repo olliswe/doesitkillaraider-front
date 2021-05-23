@@ -3,9 +3,10 @@ import isInteger from "lodash/isInteger";
 import styled from "styled-components";
 
 interface INumberInput {
+  name: string;
   value: string;
   onChange: (value: string) => void;
-  onError: (error: string) => void;
+  onError: (input: { [key: string]: boolean }) => void;
   width?: string;
   label: string;
 }
@@ -31,6 +32,7 @@ const Wrapper = styled.div<{ width?: string }>`
 `;
 
 const NumberInput = ({
+  name,
   value,
   onChange,
   onError,
@@ -44,22 +46,17 @@ const NumberInput = ({
     onChange(newValue);
     if (!isInteger(Number(newValue)) || Number(newValue) < 1) {
       setError(true);
-      onError("Must be integer!");
+      onError({ [name]: true });
     } else {
       setError(false);
-      onError("");
+      onError({ [name]: false });
     }
   };
 
   return (
-    <Wrapper>
+    <Wrapper width={width}>
       <Label>{label}</Label>
-      <StyledInput
-        type="number"
-        value={value}
-        onChange={handleChange}
-        width={width}
-      />
+      <StyledInput type="number" value={value} onChange={handleChange} />
       {error && <Error>Invalid!</Error>}
     </Wrapper>
   );

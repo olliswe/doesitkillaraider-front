@@ -6,6 +6,9 @@ import Col from "../elements/Col";
 import Dropdown from "../elements/NumberDropdown";
 import Row from "elements/Row";
 import CheckBox from "../elements/CheckBox";
+import { STRENGTH_OPTIONS } from "../config/app";
+import useFormStore from "../hooks/useFormStore";
+import shallow from "zustand/shallow";
 
 const Wrapper = styled.div`
   margin-top: 2rem;
@@ -19,54 +22,22 @@ const Box = styled.div`
   flex-direction: column;
 `;
 
-const OPTIONS = [
-  {
-    value: 3,
-    label: "3 or less",
-  },
-  {
-    value: 4,
-    label: "4",
-  },
-  {
-    value: 5,
-    label: "5",
-  },
-  {
-    value: 6,
-    label: "6",
-  },
-  {
-    value: 7,
-    label: "7",
-  },
-  {
-    value: 8,
-    label: "8",
-  },
-  {
-    value: 9,
-    label: "9",
-  },
-  {
-    value: 10,
-    label: "10",
-  },
-  {
-    value: 11,
-    label: "11",
-  },
-  {
-    value: 12,
-    label: "12 or more",
-  },
-];
-
 const StatsForm = () => {
-  const [state, setState] = useState("");
-  const [error, setError] = useState("");
-
-  const [number, setNumber] = useState("");
+  const { bs, shots, s, ap, d, rerollHit, rerollWound } = useFormStore(
+    (state) => ({
+      bs: state.bs,
+      shots: state.shots,
+      s: state.s,
+      ap: state.ap,
+      d: state.d,
+      rerollHit: state.rerollHit,
+      rerollWound: state.rerollWound,
+    }),
+    shallow
+  );
+  const errors = useFormStore((state) => state.errors);
+  const setState = useFormStore((state) => state.setState);
+  const setErrors = useFormStore((state) => state.setErrors);
 
   return (
     <Wrapper>
@@ -75,14 +46,22 @@ const StatsForm = () => {
           <Row>
             <Col>
               <NumberInput
-                value={state}
-                onChange={setState}
-                onError={setError}
+                value={shots}
+                onChange={(shots) => setState({ shots })}
+                onError={setErrors}
                 label={"Number of shots"}
+                name="shots"
               />
             </Col>
             <Col>
-              <Dropdown value={number} options={OPTIONS} />
+              <Dropdown
+                value={s}
+                options={STRENGTH_OPTIONS}
+                onChange={(s) => setState({ s })}
+                label={"Strength"}
+                name="s"
+                onError={setErrors}
+              />
             </Col>
           </Row>
           <Row>
